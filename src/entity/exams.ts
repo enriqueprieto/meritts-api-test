@@ -3,7 +3,7 @@ import { ExamType } from 'src/types/exam-type';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Questions } from './questions';
 
-@Entity()
+@Entity('exams')
 export class Exams implements Exam{
     @PrimaryGeneratedColumn('uuid')
     id:string;

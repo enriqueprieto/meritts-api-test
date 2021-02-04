@@ -13,3 +13,11 @@ $ npm install
 ```bash
 $ npm run start
 ```
+
+## Provas (Exams)
+
+### Recuperando todas as provas
+
+| Tipo | Rota | Parâmetros | Retorno |
+|------|------|------------|---------|
+|GET   | /exams | none | Exams[] |
