@@ -1,23 +1,23 @@
 import { Option } from "src/types/option";
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Questions } from "./questions";
+import { Entity, Column } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class Options implements Option{
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @Column()
+    id:string;
     @Column()
     key: string;
     @Column()
     value: string;
-    @Column()
+    @Column({default: false})
     correct: boolean;
-    @ManyToOne(() => Questions, question => question.options)
-    question:Questions;
     constructor(option?:Options){
         if(option){
             if(option.id){
                 this.id = option.id;
+            }else{
+                this.generateUUID();
             }
             if(option.key){
                 this.key = option.key;
@@ -28,6 +28,11 @@ export class Options implements Option{
             if(typeof option.correct == 'boolean'){
                 this.correct = option.correct;
             }
+        }else{
+            this.generateUUID();
         }
+    }
+    generateUUID(){
+        this.id = uuidv4();
     }
 }

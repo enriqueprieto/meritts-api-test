@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { Exams } from 'src/entity/exams';
+import { Questions } from 'src/entity/questions';
 import { ExamsService } from './exams.service';
 
 @Controller('exams')
@@ -27,7 +28,7 @@ export class ExamsController {
         try {
             let exam = await this.examsService.findOne(params.id);
             if(!exam){
-                throw new Error('Exam not found');
+                throw new Error('Prova não encontrada.');
             }
             return{
                 status: true,
@@ -52,7 +53,7 @@ export class ExamsController {
             }
             return { 
                 status: true,
-                result: exam 
+                result: exam
             };
         } catch (error) {
             return {

@@ -5,5 +5,5 @@ export interface Exam {
     name: string;
     description: string;
     type: ExamType;
-    questions?: Question[];
+    questions: Question[];
   }
