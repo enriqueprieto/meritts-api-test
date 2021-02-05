@@ -9,14 +9,23 @@ export class ExamsService{
         @InjectRepository(Exams)
         private examsRepository:Repository<Exams>
     ){}
+    async exist(id:string):Promise<boolean>{
+        let exam = await this.findOne(id);
+        if(!exam){
+            return false;
+        }
+        return true;
+    }
     findAll():Promise<Exams[]>{
         return this.examsRepository.find();
     }
     findOne(id:string):Promise<Exams>{
-        return this.examsRepository.findOne({
-            where: {
-                id: id
-            }
-        });
+        return this.examsRepository.findOne(id);
+    }
+    save(exam:Exams){
+        return this.examsRepository.save(exam);
+    }
+    delete(id:string){
+        return this.examsRepository.delete(id);
     }
 }
