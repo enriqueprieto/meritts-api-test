@@ -38,13 +38,7 @@ export class QuestionsController {
             if(!exam){
                 throw new Error('Prova não encontrada.');
             }
-            let questions = exam.questions.filter((question)=>{
-                return question.id == params.id;
-            });
-            if(questions.length == 0){
-                throw new Error('Questão não encontrada nesta prova.');
-            }
-            let question = questions[0];
+            let question = await exam.getQuestion(params.id);
             question.shuffleOptions();
             return {
                 status: true,
@@ -90,16 +84,9 @@ export class QuestionsController {
             if(!exam){
                 throw new Error('Prova não encontrada.');
             }     
-            let questions = exam.questions.filter((question)=>{
-                return question.id == params.id;
-            });
-            if(questions.length == 0){
-                throw new Error('Questão não encontrada nesta prova.');
-            }      
-            let question = questions[0];
-            let questionIndex = exam.questions.findIndex((item)=>{
-                return item.id == params.id;
-            });
+            let questionSearch = await exam.getQuestionAndIndex(params.id);
+            let question = questionSearch.question;
+            let questionIndex = questionSearch.index;
             if(question.statement != body.statement) {
                 question.statement = body.statement;
             }
@@ -122,17 +109,9 @@ export class QuestionsController {
             let exam = await this.examsService.findOne(params.examId);
             if(!exam){
                 throw new Error('Prova não encontrada.');
-            }     
-            let questions = exam.questions.filter((question)=>{
-                return question.id == params.id;
-            });
-            if(questions.length == 0){
-                throw new Error('Questão não encontrada nesta prova.');
-            }      
-            let questionIndex = exam.questions.findIndex((item)=>{
-                return item.id == params.id;
-            });
-            exam.questions.splice(questionIndex, 1);
+            }
+            let questionSearch = await exam.getQuestionAndIndex(params.id);
+            exam.questions.splice(questionSearch.index, 1);
             exam = await this.examsService.save(exam);
             return {
                 status: true,
@@ -155,16 +134,9 @@ export class QuestionsController {
             if(!exam){
                 throw new Error('Prova não encontrada.');
             }
-            let questions = exam.questions.filter((question)=>{
-                return question.id == params.id;
-            });
-            if(questions.length == 0){
-                throw new Error('Questão não encontrada nesta prova.');
-            }
-            let question = questions[0];
-            let questionIndex = exam.questions.findIndex((question)=>{
-                return question.id == params.id;
-            });
+            let questionSearch = await exam.getQuestionAndIndex(params.id);
+            let question = questionSearch.question;
+            let questionIndex = questionSearch.index;
             question.options.push(new Options(body));
             exam.questions[questionIndex] = question;
             exam = await this.examsService.save(exam);
