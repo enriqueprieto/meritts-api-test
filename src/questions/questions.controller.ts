@@ -15,9 +15,14 @@ export class QuestionsController {
             if(!exam){
                 throw new Error('Prova não encontrada.');
             }
+            let questions = [];
+            exam.questions.forEach((question)=>{
+                question.shuffleOptions();
+                questions.push(question);
+            })
             return {
                 status: true,
-                result: exam.questions
+                result: questions
             };
         } catch (error) {
             return {
@@ -40,6 +45,7 @@ export class QuestionsController {
                 throw new Error('Questão não encontrada nesta prova.');
             }
             let question = questions[0];
+            question.shuffleOptions();
             return {
                 status: true,
                 result: question

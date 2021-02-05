@@ -8,6 +8,9 @@ Repositório destinado para teste técnico na empresa Meritts.
 4. [Provas](#provas)
     1. [Modelo de Dados](#modelo-de-dados-provas)
     2. [Rotas](#modelo-de-dados-provas)
+5. [Questões](#questoes-da-prova)
+    1. [Modelo de Dados](#modelo-de-dados-questoes)
+    2. [Rotas](#modelo-de-dados-questoes)
     
 ## Instalação
 
@@ -90,8 +93,16 @@ class Options implements Option{}
 
 ### Rotas Questoes
 
-| Rota                     | Tipo     | Parâmetros | Retorno                    |
-|--------------------------|----------|------------|----------------------------|
-| /exams/:examId/questions | `GET`    | `none`     | `ApiResponse<Questions[]>` |
+| Rota                                            | Tipo     | Parâmetros  | Retorno                    |
+|-------------------------------------------------|----------|-------------|----------------------------|
+| /exams/:examId/questions                        | `GET`    | `none`      | `ApiResponse<Questions[]>` |
+| /exams/:examId/questions                        | `POST`   | `Questions` | `ApiResponse<Questions>`   |
+| /exams/:examId/questions/:id                    | `GET`    | `none`      | `ApiResponse<Questions>`   |
+| /exams/:examId/questions/:id                    | `PUT`    | `Questions` | `ApiResponse<Questions>`   |
+| /exams/:examId/questions/:id                    | `DELETE` | `none`      | `ApiResponse<string>`      |
+| /exams/:examId/questions/:id/options            | `POST`   | `Options`   | `ApiResponse<Exams>`       |
+| /exams/:examId/questions/:id/options/:optionId  | `POST`   | `Options`   | `ApiResponse<Exams>`       |
+| /exams/:examId/questions/:id/options/:optionId  | `PUT`    | `Options`   | `ApiResponse<Exams>`       |
+| /exams/:examId/questions/:id/options/:optionId  | `DELETE` | `none`      | `ApiResponse<string>`      |
 
 **Obs:** Os retornos citados a cima estará na propriedade `result` do [Retorno da Api](#retorno-da-api).
