@@ -28,4 +28,7 @@ export class ExamsService{
     delete(id:string){
         return this.examsRepository.delete(id);
     }
+    instance(){
+        return this.examsRepository;
+    }
 }

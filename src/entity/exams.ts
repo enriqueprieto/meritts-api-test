@@ -1,12 +1,12 @@
 import { Exam } from 'src/types/exam';
 import { ExamType } from 'src/types/exam-type';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ObjectIdColumn, ObjectID } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID } from 'typeorm';
 import { Questions } from './questions';
 
 @Entity()
 export class Exams implements Exam{
     @ObjectIdColumn({
-        generated: "uuid",
+        generated: 'uuid',
         primary: true
     })
     id:ObjectID;
@@ -16,31 +16,30 @@ export class Exams implements Exam{
     description: string;
     @Column()
     type: ExamType;
-    @ManyToMany(() => Questions, question => question.exams)
-    @JoinTable()
+    @Column(() => Questions)
     questions:Questions[];
-    constructor(exam?:Exams){
-        if(exam){
-            if(exam.id){
-                this.id = exam.id;
+    constructor(model?:Exams){
+        if(model){
+            if(model.id){
+                this.id = model.id;
             }
-            if(exam.name){
-                this.name = exam.name;
+            if(model.name){
+                this.name = model.name;
             }
-            if(exam.description){
-                this.description = exam.description;
+            if(model.description){
+                this.description = model.description;
             }
-            if(exam.type){
-                this.type = exam.type;
+            if(model.type){
+                this.type = model.type;
             }
-            if(exam.questions && exam.questions.length > 0){
-                this.questions = this.setQuestions(exam.questions);
+            if(model.questions && model.questions.length > 0){
+                this.questions = this.setQuestions(model.questions);
             }else{
                 this.questions = [];
             }
         }
     }
-    setQuestions(questions:Questions[]){
+    setQuestions(questions:Questions[]):Questions[]{
         let items = [];
         questions.forEach((question)=>{
             items.push(new Questions(question));
