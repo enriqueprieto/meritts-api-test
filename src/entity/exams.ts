@@ -46,4 +46,23 @@ export class Exams implements Exam{
         });
         return items;
     }
+    async getQuestion(questionId:string):Promise<Questions>{
+        if(!this.questions || this.questions && this.questions.length == 0){
+            throw new Error('Questão não encontrada nesta prova.');
+        }
+        let items = this.questions.filter((question)=>{
+            return question.id == questionId;
+        });
+        if(items.length == 0){
+            throw new Error('Questão não encontrada nesta prova.');
+        }
+        return items[0];
+    }
+    async getQuestionAndIndex(questionId:string):Promise<{question:Questions, index:number}>{
+        let question = await this.getQuestion(questionId),
+            index = this.questions.findIndex((item)=>{
+                return item.id = questionId;
+            });
+        return { question, index };
+    }
 }
